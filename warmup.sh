@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #!/bin/bash
 
 # Usage: ./runtime.sh [llm-model]
@@ -17,6 +18,20 @@ echo "Give me a recipe for a vegan chocolate cake." | ollama run "$LLM_MODEL"
 echo "Summarize the plot of Shakespeare's Hamlet in two sentences." | ollama run "$LLM_MODEL"
 echo "How do you optimize a SQL query for faster performance?" | ollama run "$LLM_MODEL"
 echo "What are the main differences between HTTP and HTTPS protocols?" | ollama run "$LLM_MODEL"
+=======
+echo "Warming up model using a good variety of example prompts"
+
+echo "What is the capital of France?" | ollama run llama3.2:1b
+echo "Was ist schwerer. Ein Kilogramm Stahl oder ein Kilogramm Federn?" | ollama run llama3.2:1b
+echo "Tôi đang phát triển một ứng dụng Spring Boot với Kotlin và Maven. Làm thế nào để cấu hình Liquibase để nó chạy khi ứng dụng của tôi khởi động?" | ollama run llama3.2:1b
+echo "Explain the difference between supervised and unsupervised learning in machine learning." | ollama run llama3.2:1b
+echo "Write a haiku about autumn leaves." | ollama run llama3.2:1b
+echo "¿Cuál es el impacto del cambio climático en los océanos?" | ollama run llama3.2:1b
+echo "Give me a recipe for a vegan chocolate cake." | ollama run llama3.2:1b
+echo "Summarize the plot of Shakespeare's Hamlet in two sentences." | ollama run llama3.2:1b
+echo "How do you optimize a SQL query for faster performance?" | ollama run llama3.2:1b
+echo "What are the main differences between HTTP and HTTPS protocols?" | ollama run llama3.2:1b
+>>>>>>> 6f42db5 (init)
 
 
 echo "Sleeping for 10 seconds to allow the model to warm up..."
