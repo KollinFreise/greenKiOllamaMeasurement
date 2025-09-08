@@ -5,6 +5,7 @@ description: WIP. Measuring the energy consumption of Ollama running in Docker
 services:
   ollama-in-docker:
     image: ollama/ollama:latest
+    container_name: ollama-in-docker
     "folder-destination": "/tmp/greenkiollamamesurements"
     setup-commands:
       - command: ollama pull llama3.3:70b
