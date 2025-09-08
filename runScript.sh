@@ -7,10 +7,7 @@ LLM_MODEL="${1:-llama3.2:1b}"
 
 echo 'Start real test'
 
-<<<<<<< HEAD
 # Task: Code Refactoring
-=======
->>>>>>> 6f42db5 (init)
 echo 'gib mir Tipps, wie man die nachfolgende Funktion refactoren kann:
 
 def validierePruefziffer(in_):
@@ -28,10 +25,7 @@ def validierePruefziffer(in_):
         return True
     return False" | ollama run "$LLM_MODEL"
 
-<<<<<<< HEAD
 # Task: Code Quality (Code Review)
-=======
->>>>>>> 6f42db5 (init)
 echo "You are an experienced software engineer and my coding mentor. Please perform a thorough code review and tell me what to improve without giving me a complete solution.
 
 class ISBNChecksumValidator:
@@ -78,10 +72,7 @@ class ISBNChecksumValidator:
                 checksum += digit
         return checksum % 10 == 0' | ollama run "$LLM_MODEL"
 
-<<<<<<< HEAD
 # Task: Documentation
-=======
->>>>>>> 6f42db5 (init)
 echo 'Kommentiere den Code. Ein Block-Kommentar je Funktion, bitte, sowie in-line Kommentare bei besonders komplizierten Stellen. Vermeide Kommentare, die nur erklären, was sowieso aus dem Code ersichtlich ist.
 
 package aufgabe1;
@@ -140,10 +131,7 @@ public class RomanNumeralCalculator {
 }
 ' | ollama run "$LLM_MODEL"
 
-<<<<<<< HEAD
 # Task: Find Bugs
-=======
->>>>>>> 6f42db5 (init)
 echo 'Ich bekomme Compile-Fehler bei dem folgenden Code. Außerdem stimmt die Funktionalität noch nicht. Bitte überarbeite den Code
 
 package aufgabe3;
@@ -223,10 +211,7 @@ public class MysteryError {
 }
 ' | ollama run "$LLM_MODEL"
 
-<<<<<<< HEAD
 # Task: Explain Code
-=======
->>>>>>> 6f42db5 (init)
 echo 'Was passiert hier? 
 
 private infix fun BookingSystem.buche(reservation: Reservation) {
@@ -254,10 +239,7 @@ public EpisodeRatingProcessor(AbstractKafkaStreamEpisode episodeStream, KafkaCon
   new KafkaConsumerDescriber<>( TOPIC_EPISODE_RATING_VALUE, new StringDeserializer(), new DoubleDeserializer() ) ); 
   processor.start("Rating of episode"); } }' | ollama run "$LLM_MODEL"
 
-<<<<<<< HEAD
 # Task: Simplify Code -> Java to Kotlin
-=======
->>>>>>> 6f42db5 (init)
 echo '
 Kannst du mir dieses File in Kotlin übersetzen. Bitte achte auf die Vorteile von Kotlin von lesbar und möglichst kompakten selbst sprechenden Code. 
 Bitte nutze wenn möglich features von Kotlin auch wenn sie im vorherigen Java Code "aufwändiger" gelöst wurden weil java dafür vermutlich keine oder unzureichende Werkzeuge bietet: 
@@ -322,10 +304,7 @@ public class TicketService {
     }
 }' | ollama run "$LLM_MODEL"
 
-<<<<<<< HEAD
 # Task: Generate code snippets
-=======
->>>>>>> 6f42db5 (init)
 echo 'Hilf mir, eine Methode zu implemeniteren, die prüft, ob ein gegebener Aufenthalt im Schengen-Raum gemäß der sogenannten 90/180-Regel zulässig ist.
 Für Schengen-Visa gilt: Innerhalb eines beliebigen Zeitraums von 180 Tagen darf sich eine Person maximal 90 Tage im Schengen-Raum aufhalten. Die Regel funktioniert entsprechend dem Sliding-Window-Prinzip – jeder Tag eines geplanten Aufenthalts verschiebt das betrachtete Zeitfenster um einen Tag nach vorne.
 Die Methode soll in Java implementiert werden und folgender Signatur entsprechen:
@@ -333,10 +312,7 @@ public static boolean isStayAllowed(List<DateInterval> previousStays, DateInterv
   // TODO!
 }' | ollama run "$LLM_MODEL"
 
-<<<<<<< HEAD
 # Task: archGenerate Code for less known programming languages
-=======
->>>>>>> 6f42db5 (init)
 echo '
 Ich habe folgende API mit der ich mir berechnen kann wann ein Task carbon aware also mit so grünem Strom wie möglich asugeführt werden kann. 
 Ich möchte nun in Homeassistant diese API nutzen um mit den Variablen einfach für verschiedene Tasks in Automationen den besten Zeitpunkt ab zu fragen zudem meine Anwendung laufen kann. 
@@ -350,10 +326,7 @@ Ignores current forecast data points after this time. Defaults to the latest tim
 In five hoursIn ten hours windowSize integer($int32) (query) The estimated duration (in minutes) of the workload. 
 Defaults to 5 Minutes (This is different from GSF SDK which default to the duration of a single forecast data point).'| ollama run "$LLM_MODEL"
 
-<<<<<<< HEAD
 # Task: Software Architektur
-=======
->>>>>>> 6f42db5 (init)
 echo 'Berate mich als erfahrener SW Architekt mit Betriebserfahrung. 
 Ich habe ein System bestehend aus circa 10 eigenständigen Services. 
 Davon sind fünf in einem Code-Repo, drei in eigenen Repos und zwei sind Dienste, die als komplette Docker-Images übernommen werden. 
