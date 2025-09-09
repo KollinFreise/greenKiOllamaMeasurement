@@ -3,11 +3,6 @@ author: Bennet Wilhelm <bennet.wilhelm@accso.de>, Kollin Freise <kollin.freise@a
 description: WIP. Measuring the energy consumption of Ollama running in Docker
 
 services:
-  verification-container:
-    image: alpine/curl
-    depends_on: 
-      ollama-in-docker:
-        condition: service_healthy
   ollama-in-docker:
     image: ollama/ollama:latest
     container_name: ollama-in-docker
@@ -18,15 +13,6 @@ services:
       - command: chmod +x /var/greenkiollamamesurements/warmup.sh
       - command: cp /tmp/greenkiollamamesurements/runScript.sh /var/greenkiollamamesurements/runScript.sh
       - command: chmod +x /var/greenkiollamamesurements/runScript.sh
-    # optional healthcheck to really guarantee that ollama server is running
-    healthcheck:
-      test: ["CMD-SHELL", "echo > /dev/tcp/localhost/11434 || exit 1"]
-      interval: "1h" # effectively turns repeated healthchecks during runtime off
-      start_period: "60s"
-      start_interval: "1s"
-
-
-  
 
 flow:
   - name: Download model
