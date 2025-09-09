@@ -7,12 +7,6 @@ services:
     image: alpine/curl
     depends_on: 
       - ollama-in-docker
-    # optional healthcheck to really guarantee that ollama server is running
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://ollama-in-docker:11434/api/tags"]
-      interval: "1h" # effectively turns repeated healthchecks during runtime off
-      start_period: "60s"
-      start_interval: "1s"
   ollama-in-docker:
     image: ollama/ollama:latest
     container_name: ollama-in-docker
@@ -23,6 +17,12 @@ services:
       - command: chmod +x /var/greenkiollamamesurements/warmup.sh
       - command: cp /tmp/greenkiollamamesurements/runScript.sh /var/greenkiollamamesurements/runScript.sh
       - command: chmod +x /var/greenkiollamamesurements/runScript.sh
+    # optional healthcheck to really guarantee that ollama server is running
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://ollama-in-docker:11434/api/tags"]
+      interval: "1h" # effectively turns repeated healthchecks during runtime off
+      start_period: "60s"
+      start_interval: "1s"
 
 
   
