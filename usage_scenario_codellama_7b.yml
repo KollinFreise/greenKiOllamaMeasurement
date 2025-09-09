@@ -4,7 +4,7 @@ description: WIP. Measuring the energy consumption of Ollama running in Docker
 
 services:
   verification-container:
-    image: apline/curl
+    image: alpine/curl
     depends_on: 
       - ollama-in-docker
     # optional healthcheck to really guarantee that ollama server is running
