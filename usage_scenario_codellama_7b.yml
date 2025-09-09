@@ -8,15 +8,25 @@ services:
     container_name: ollama-in-docker
     "folder-destination": "/tmp/greenkiollamamesurements"
     setup-commands:
-      - command: ollama pull codellama:7b
       - command: mkdir /var/greenkiollamamesurements
       - command: cp /tmp/greenkiollamamesurements/warmup.sh /var/greenkiollamamesurements/warmup.sh
       - command: chmod +x /var/greenkiollamamesurements/warmup.sh
       - command: cp /tmp/greenkiollamamesurements/runScript.sh /var/greenkiollamamesurements/runScript.sh
       - command: chmod +x /var/greenkiollamamesurements/runScript.sh
-
+    # optional healthcheck to really guarantee that ollama server is running
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: "1h" # effectively turns repeated healthchecks during runtime off
+      start_period: "60s"
+      start_interval: "1s"
 
 flow:
+  - name: Download model
+    container: ollama-in-docker
+    commands:
+      - type: console
+        command: ollama pull codellama:7b
+        note: Downloading model
   - name: Start Ollama and warm-up models
     container: ollama-in-docker
     commands:
