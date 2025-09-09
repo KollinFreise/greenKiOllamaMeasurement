@@ -20,7 +20,7 @@ services:
       - command: chmod +x /var/greenkiollamamesurements/runScript.sh
     # optional healthcheck to really guarantee that ollama server is running
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://ollama-in-docker:11434/api/tags"]
+      test: ["CMD-SHELL", "echo > /dev/tcp/localhost/11434 || exit 1"]
       interval: "1h" # effectively turns repeated healthchecks during runtime off
       start_period: "60s"
       start_interval: "1s"
