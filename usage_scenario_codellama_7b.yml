@@ -6,7 +6,8 @@ services:
   verification-container:
     image: alpine/curl
     depends_on: 
-      - ollama-in-docker
+      ollama-in-docker:
+        condition: service_healthy
   ollama-in-docker:
     image: ollama/ollama:latest
     container_name: ollama-in-docker
