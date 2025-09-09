@@ -8,7 +8,6 @@ services:
     container_name: ollama-in-docker
     "folder-destination": "/tmp/greenkiollamamesurements"
     setup-commands:
-      - command: dasdsad
       - command: mkdir /var/greenkiollamamesurements
       - command: cp /tmp/greenkiollamamesurements/warmup.sh /var/greenkiollamamesurements/warmup.sh
       - command: chmod +x /var/greenkiollamamesurements/warmup.sh
