@@ -13,6 +13,8 @@ services:
       - command: chmod +x /var/greenkiollamamesurements/warmup.sh
       - command: cp /tmp/greenkiollamamesurements/runScript.sh /var/greenkiollamamesurements/runScript.sh
       - command: chmod +x /var/greenkiollamamesurements/runScript.sh
+    "docker-run-args": 
+      - "--gpus=all"
 
 
 flow:
