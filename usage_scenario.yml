@@ -12,7 +12,7 @@ services:
       - command: chmod +x /var/greenkiollamamesurements/warmup.sh
       - command: cp /tmp/greenkiollamamesurements/use_cases_coding.sh /var/greenkiollamamesurements/use_cases_coding.sh
       - command: chmod +x /var/greenkiollamamesurements/use_cases_coding.sh
-      - command: cp /tmp/greenkiollamamesurements/use_cases_coding.sh /var/greenkiollamamesurements/use_cases_non_coding.sh
+      - command: cp /tmp/greenkiollamamesurements/use_cases_non_coding.sh /var/greenkiollamamesurements/use_cases_non_coding.sh
       - command: chmod +x /var/greenkiollamamesurements/use_cases_non_coding.sh
     "docker-run-args":
       - "--gpus=all"
