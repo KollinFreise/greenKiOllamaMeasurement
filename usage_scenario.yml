@@ -6,6 +6,8 @@ services:
   ollama-in-docker:
     image: ollama/ollama:latest
     "folder-destination": "/tmp/greenkiollamamesurements"
+    environment-variables:
+      - OLLAMA_REQUEST_TIMEOUT=3600s
     setup-commands:
       - command: mkdir /var/greenkiollamamesurements
       - command: cp /tmp/greenkiollamamesurements/warmup.sh /var/greenkiollamamesurements/warmup.sh
@@ -16,6 +18,8 @@ services:
       - command: chmod +x /var/greenkiollamamesurements/use_cases_non_coding.sh
     "docker-run-args":
       - "--gpus=all"
+      - "--cpus=6"      # for Intel i5-9600K
+      - "--memory=32g"  # for 31.28GiB Total Memory
 
 flow:
   - name: Download model
