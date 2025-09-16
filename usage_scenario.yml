@@ -18,8 +18,6 @@ services:
       - command: chmod +x /var/greenkiollamamesurements/use_cases_non_coding.sh
     "docker-run-args":
       - "--gpus=all"
-      - "--cpus=6"      # for Intel i5-9600K
-      - "--memory=32g"  # for 31.28GiB Total Memory
 
 flow:
   - name: Download model
