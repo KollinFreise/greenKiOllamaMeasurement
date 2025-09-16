@@ -7,6 +7,8 @@ LLM_MODEL="${1:-llama3.2:1b}"
 
 echo "Warming up model using a good variety of example prompts"
 
+echo "The value for OLLAMA_REQUEST_TIMEOUT is: $OLLAMA_REQUEST_TIMEOUT"
+
 echo "What is the capital of France?" | ollama run "$LLM_MODEL"
 echo "Was ist schwerer. Ein Kilogramm Stahl oder ein Kilogramm Federn?" | ollama run "$LLM_MODEL"
 echo "Tôi đang phát triển một ứng dụng Spring Boot với Kotlin và Maven. Làm thế nào để cấu hình Liquibase để nó chạy khi ứng dụng của tôi khởi động?" | ollama run "$LLM_MODEL"
