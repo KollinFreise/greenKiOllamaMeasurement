@@ -24,7 +24,6 @@ flow:
       - type: console
         command: ollama pull __GMT_VAR_MODEL__
         note: Downloading model
-        timeout: 3600
   - name: Start Ollama and warm-up models
     container: ollama-in-docker
     commands:
