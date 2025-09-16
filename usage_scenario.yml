@@ -6,7 +6,7 @@ services:
   ollama-in-docker:
     image: ollama/ollama:latest
     "folder-destination": "/tmp/greenkiollamamesurements"
-    environment-variables:
+    environment:
       - OLLAMA_REQUEST_TIMEOUT=3600s
     setup-commands:
       - command: mkdir /var/greenkiollamamesurements
