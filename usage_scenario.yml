@@ -36,11 +36,11 @@ flow:
     container: ollama-in-docker
     commands:
       - type: console
-        command: sh /var/greenkiollamamesurements/use_cases_coding.sh __GMT_VAR_MODEL__
+        command: bash /var/greenkiollamamesurements/use_cases_coding.sh __GMT_VAR_MODEL__
         note: Testing model with coding tasks
   - name: Running model with non-coding tasks
     container: ollama-in-docker
     commands:
       - type: console
-        command: sh /var/greenkiollamamesurements/use_cases_non_coding.sh __GMT_VAR_MODEL__
+        command: bash /var/greenkiollamamesurements/use_cases_non_coding.sh __GMT_VAR_MODEL__
         note: Testing model with non-coding tasks
