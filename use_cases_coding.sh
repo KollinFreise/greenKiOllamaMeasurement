@@ -7,26 +7,44 @@ LLM_MODEL="${1:-llama3.2:1b}"
 
 echo 'Start real test'
 
+CODING_SYSTEMPROMPT="You are an expert software developer. Your responses should be professional, technically accurate, and focused on providing 
+high-quality code, explanations, and advice. When asked to write or modify code, prioritize clarity, efficiency, and best practices."
+
+function run_coding_task_with_timing() {
+    local prompt="$1"
+    local taskname="$2"
+    echo
+    echo "===== $taskname ====="
+    local start=$(date +%s)
+    local timestamp_start=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "[$timestamp_start] Start"
+    echo -e "$CODING_SYSTEMPROMPT\n\n$prompt" | ollama run "$LLM_MODEL"
+    local end=$(date +%s)
+    local timestamp_end=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "[$timestamp_end] End"
+    echo "Duration: $((end - start)) seconds"
+}
+
 # Task: Code Refactoring
-echo 'gib mir Tipps, wie man die nachfolgende Funktion refactoren kann:
+run_coding_task_with_timing 'gib mir Tipps, wie man die nachfolgende Funktion refactoren kann:
 
 def validierePruefziffer(in_):
     pre = int(in_[:3])
     if pre != 978:
-       return False
+        return False
     postStr = in_[4:]
     if len(postStr) != 10:
         return False
     post = int(postStr)
     sum_ = 38
     for x in range(0, 10, 2):
-       sum_ += (ord(postStr[x]) - 48) * 3 + (ord(postStr[x + 1]) - 48)
+        sum_ += (ord(postStr[x]) - 48) * 3 + (ord(postStr[x + 1]) - 48)
     if sum_ % 10 == 0:
         return True
-    return False" | ollama run "$LLM_MODEL"
+    return False' "Code Refactoring"
 
 # Task: Code Quality (Code Review)
-echo "You are an experienced software engineer and my coding mentor. Please perform a thorough code review and tell me what to improve without giving me a complete solution.
+run_coding_task_with_timing 'You are an experienced software engineer and my coding mentor. Please perform a thorough code review and tell me what to improve without giving me a complete solution.
 
 class ISBNChecksumValidator:
     VALID_ISBN13_PREFIX = 978
@@ -46,20 +64,20 @@ class ISBNChecksumValidator:
         post = int(postStr)
         sum_ = self.CHECKSUM_OF_PREFIX
         for x in range(0, 10, 2):
-            sum_ += (ord(postStr[x]) - ord('0')) * 3 + (ord(postStr[x + 1]) - 48)
+            sum_ += (ord(postStr[x]) - ord("0")) * 3 + (ord(postStr[x + 1]) - 48)
         if sum_ % 10 == 0:
             return True
         return False
 
     # Here we could also throw an error if the char is not a digit a.k.a. ![0-9]
     def parseCharToInt(self, c):
-        return ord(c) - ord('0')
+        return ord(c) - ord("0")
 
     def refactoredIsISBN13(self, isbn13):
         prefix = int(isbn13[:3])
         if prefix != self.VALID_ISBN13_PREFIX:
             return False
-        # Separate the prefix from the rest of the ISBN after the '-' TODO: Unnecessary?
+        # Separate the prefix from the rest of the ISBN after the "-" TODO: Unnecessary?
         isbn = isbn13[4:]
         if len(isbn) != self.VALID_ISBN_LENGTH:
             return False
@@ -70,10 +88,10 @@ class ISBNChecksumValidator:
                 checksum += digit * 3
             else:
                 checksum += digit
-        return checksum % 10 == 0' | ollama run "$LLM_MODEL"
+        return checksum % 10 == 0' "Code Quality (Code Review)"
 
 # Task: Documentation
-echo 'Kommentiere den Code. Ein Block-Kommentar je Funktion, bitte, sowie in-line Kommentare bei besonders komplizierten Stellen. Vermeide Kommentare, die nur erklären, was sowieso aus dem Code ersichtlich ist.
+run_coding_task_with_timing 'Kommentiere den Code. Ein Block-Kommentar je Funktion, bitte, sowie in-line Kommentare bei besonders komplizierten Stellen. Vermeide Kommentare, die nur erklären, was sowieso aus dem Code ersichtlich ist.
 
 package aufgabe1;
 
@@ -128,15 +146,10 @@ public class RomanNumeralCalculator {
         if (n1 < 1 || n2 < 1 || n1 - n2 < 1) return null;
         return intToRoman(n1 - n2);
     }
-}
-' | ollama run "$LLM_MODEL"
+}' "Documentation"
 
 # Task: Find Bugs
-echo 'Ich bekomme Compile-Fehler bei dem folgenden Code. Außerdem stimmt die Funktionalität noch nicht. Bitte überarbeite den Code
-
-package aufgabe3;
-
-import javaIch bekomme Compile-Fehler bei dem folgenden Code. Außerdem stimmt die Funktionalität noch nicht. Bitte überarbeite den Code
+run_coding_task_with_timing 'Ich bekomme Compile-Fehler bei dem folgenden Code. Außerdem stimmt die Funktionalität noch nicht. Bitte überarbeite den Code
 
 package aufgabe3;
 
@@ -173,53 +186,16 @@ public class MysteryError {
         List<String> words = new ArrayList<>(Arrays.asList("java", "lambda", "stream", "error", "generics"));
         processWords(words, 'a');
     }
-}
-
-.util.*;
-import java.util.stream.*;
-
-/**
- * Diese Klasse demonstriert einige Fehler im Umgang mit Listen und Streams.
- * Sie enthält eine Methode, die Wörter verarbeitet und dabei einige unerwartete
- * Ergebnisse liefert.
- */
-public class MysteryError {
-
-    public static void processWords(List<String> words, char forbidden) {
-        List<?> filtered = words;
-        for (String word : words) {
-            if (word.indexOf(forbidden) >= 0) {
-                filtered.remove(word);
-            }
-        }
-
-        String suffix = "!";
-        words.forEach(w -> {
-            w = w.toUpperCase() + suffix;
-            System.out.println(w);
-        });
-
-        Stream<String> stream = filtered.stream();
-        stream.forEach(System.out::println);
-        stream.forEach(System.out::println);
-    }
-
-    public static void main(String[] args) {
-        List<String> words = new ArrayList<>(Arrays.asList("java", "lambda", "stream", "error", "generics"));
-        processWords(words, 'a');
-    }
-}
-' | ollama run "$LLM_MODEL"
+}' "Find Bugs"
 
 # Task: Explain Code
-echo 'Was passiert hier? 
+run_coding_task_with_timing 'Was passiert hier? 
 
 private infix fun BookingSystem.buche(reservation: Reservation) {
     this.booktable(reservation.tableNumber.toInt(), reservation.persons, reservation.occasion.toString(), null, reservation.customer?.customerId ?: 0)
-}
-' | ollama run "$LLM_MODEL"
+}' "Explain Code (Kotlin infix)"
 
-echo 'was passiert hier: 
+run_coding_task_with_timing 'was passiert hier: 
 
 package org.accso.kafka.streams.praktikum.model.episode.processor; 
 import org.accso.kafka.streams.praktikum.helper.KafkaConsumerDescriber; 
@@ -237,10 +213,10 @@ public EpisodeRatingProcessor(AbstractKafkaStreamEpisode episodeStream, KafkaCon
   final EpisodeRatingProcessor processor = new EpisodeRatingProcessor( 
   new KafkaStreamEpisodeRating(), 
   new KafkaConsumerDescriber<>( TOPIC_EPISODE_RATING_VALUE, new StringDeserializer(), new DoubleDeserializer() ) ); 
-  processor.start("Rating of episode"); } }' | ollama run "$LLM_MODEL"
+  processor.start("Rating of episode"); } }' "Explain Code (Kafka Processor)"
 
 # Task: Simplify Code -> Java to Kotlin
-echo '
+run_coding_task_with_timing '
 Kannst du mir dieses File in Kotlin übersetzen. Bitte achte auf die Vorteile von Kotlin von lesbar und möglichst kompakten selbst sprechenden Code. 
 Bitte nutze wenn möglich features von Kotlin auch wenn sie im vorherigen Java Code "aufwändiger" gelöst wurden weil java dafür vermutlich keine oder unzureichende Werkzeuge bietet: 
 package de.accso.flexinale.core.domain.services;
@@ -302,18 +278,18 @@ public class TicketService {
     public List<Ticket> findByBesucherOrderByZeit(final Besucher eingeloggterBesucher) {
         return ticketDao.findByBesucherOrderByZeit(eingeloggterBesucher);
     }
-}' | ollama run "$LLM_MODEL"
+}' "Simplify Code (Java to Kotlin)"
 
 # Task: Generate code snippets
-echo 'Hilf mir, eine Methode zu implemeniteren, die prüft, ob ein gegebener Aufenthalt im Schengen-Raum gemäß der sogenannten 90/180-Regel zulässig ist.
+run_coding_task_with_timing 'Hilf mir, eine Methode zu implemeniteren, die prüft, ob ein gegebener Aufenthalt im Schengen-Raum gemäß der sogenannten 90/180-Regel zulässig ist.
 Für Schengen-Visa gilt: Innerhalb eines beliebigen Zeitraums von 180 Tagen darf sich eine Person maximal 90 Tage im Schengen-Raum aufhalten. Die Regel funktioniert entsprechend dem Sliding-Window-Prinzip – jeder Tag eines geplanten Aufenthalts verschiebt das betrachtete Zeitfenster um einen Tag nach vorne.
 Die Methode soll in Java implementiert werden und folgender Signatur entsprechen:
 public static boolean isStayAllowed(List<DateInterval> previousStays, DateInterval plannedStay) {
   // TODO!
-}' | ollama run "$LLM_MODEL"
+}' "Generate Code Snippets (Schengen Rule)"
 
-# Task: archGenerate Code for less known programming languages
-echo '
+# Task: Generate Code for less known programming languages
+run_coding_task_with_timing '
 Ich habe folgende API mit der ich mir berechnen kann wann ein Task carbon aware also mit so grünem Strom wie möglich asugeführt werden kann. 
 Ich möchte nun in Homeassistant diese API nutzen um mit den Variablen einfach für verschiedene Tasks in Automationen den besten Zeitpunkt ab zu fragen zudem meine Anwendung laufen kann. 
 /emissions/forecasts/current Get the best execution time with minimal grid carbon intensity Get the best execution time with minimal grid carbon intensity. 
@@ -324,17 +300,18 @@ Start time boundary of forecasted data points. Ignores current forecast data poi
 Defaults to the earliest time in the forecast data. Examples: NowIn one hour dataEndAt string($date-time) (query) End time boundary of forecasted data points. 
 Ignores current forecast data points after this time. Defaults to the latest time in the forecast data. Examples: 
 In five hoursIn ten hours windowSize integer($int32) (query) The estimated duration (in minutes) of the workload. 
-Defaults to 5 Minutes (This is different from GSF SDK which default to the duration of a single forecast data point).'| ollama run "$LLM_MODEL"
+Defaults to 5 Minutes (This is different from GSF SDK which default to the duration of a single forecast data point).' "Generate Code (Home Assistant)"
 
 # Task: Software Architektur
-echo 'Berate mich als erfahrener SW Architekt mit Betriebserfahrung. 
+run_coding_task_with_timing 'Berate mich als erfahrener SW Architekt mit Betriebserfahrung. 
 Ich habe ein System bestehend aus circa 10 eigenständigen Services. 
 Davon sind fünf in einem Code-Repo, drei in eigenen Repos und zwei sind Dienste, die als komplette Docker-Images übernommen werden. 
 Bisher haben alle Komponenten in Jira eigene Versionen - die Images haben wrapper, die sie versionieren. 
 Jetzt hat sich die Betriebsorganisation geändert und Releases sind sehr langsam und schwierig. Welche Optionen hat man, mit den Versionsnummern umzugehen?
- Was spricht dafür, alle eigene Software im Gleichschritt zu versionieren?' | ollama run "$LLM_MODEL"
+ Was spricht dafür, alle eigene Software im Gleichschritt zu versionieren?' "Software Architecture Advice"
 
-echo 'Vervollständige den BookingSystemTest.
+# Task: Complete Test
+run_coding_task_with_timing 'Vervollständige den BookingSystemTest.
 
 package de.accso.praktikum.reservationsystem.de.accso.praktikum.reservationsystem
 
@@ -404,7 +381,6 @@ fun foo() {
     assertThat(system.myList).containsExactly(Reservation(4, 8, Occasion.Other, null))
 }
 
-}' | ollama run "$LLM_MODEL"
-#echo " " | ollama run "$LLM_MODEL"
-#echo " " | ollama run "$LLM_MODEL"
+}' "Complete Test (Kotlin/mockk)"
+
 sleep 10
