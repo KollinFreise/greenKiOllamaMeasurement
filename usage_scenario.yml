@@ -30,7 +30,7 @@ flow:
     container: ollama-in-docker
     commands:
       - type: console
-        command: sh /var/greenkiollamamesurements/warmup.sh __GMT_VAR_MODEL__
+        command: bash /var/greenkiollamamesurements/warmup.sh __GMT_VAR_MODEL__
         note: Warming up model
   - name: Running model with coding tasks
     container: ollama-in-docker
