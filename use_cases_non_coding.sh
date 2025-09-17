@@ -3,27 +3,29 @@
 # Usage: ./runtime.sh [llm-model]
 # Beispiel: ./runtime.sh llama3.2:1b
 
-set -e  # Stop on error
-
-echo "=== DEBUG: Script started at $(date) ==="
-echo "DEBUG: Running as user: $(whoami)"
-echo "DEBUG: Current directory: $(pwd)"
-echo "DEBUG: Args: \$1='$1'"
-echo "DEBUG: LLM_MODEL='${1:-llama3.2:1b}'"
-echo "DEBUG: Checking ollama binary location..."
-which ollama || { echo "ERROR: ollama not found in PATH!"; exit 1; }
-echo "DEBUG: ollama version: $(ollama --version 2>&1)"
-echo "DEBUG: Listing /var/greenkiollamamesurements:"
-ls -l /var/greenkiollamamesurements || echo "WARN: Directory missing!"
-echo "DEBUG: Listing /tmp/greenkiollamamesurements:"
-ls -l /tmp/greenkiollamamesurements || echo "WARN: Directory missing!"
-
 LLM_MODEL="${1:-llama3.2:1b}"
 
 echo 'Start real test'
 
+BUSINESS_SYSTEMPROMPT="You are a versatile and helpful AI assistant at Accso, a software engineering and IT consulting company. Your goal is to provide creative, professional, and practical support for various internal tasks. These tasks may range from HR and marketing to general productivity and event planning. Always maintain a helpful and company-aligned tone."
+
+function run_business_task_with_timing() {
+    local prompt="$1"
+    local taskname="$2"
+    echo
+    echo "===== $taskname ====="
+    local start=$(date +%s)
+    local timestamp_start=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "[$timestamp_start] Start"
+    echo -e "$BUSINESS_SYSTEMPROMPT\n\n$prompt" | ollama run "$LLM_MODEL"
+    local end=$(date +%s)
+    local timestamp_end=$(date +"%Y-%m-%d %H:%M:%S")
+    echo "[$timestamp_end] End"
+    echo "Duration: $((end - start)) seconds"
+}
+
 # Task: Prepare job interview (generate questions)
-echo 'I would like to generate some questions for a Job Interview. The jobdescription is following: Please generate some example Questions and important skills I have to ask the applicants. Here the jobdescription:
+run_business_task_with_timing 'I would like to generate some questions for a Job Interview. The jobdescription is following: Please generate some example Questions and important skills I have to ask the applicants. Here the jobdescription:
 
       Senior Fullstack Entwickler - Java, Spring, Angular*
 
@@ -86,10 +88,10 @@ echo 'I would like to generate some questions for a Job Interview. The jobdescri
       Werde Accsonaut:in
 
       *Für uns ist dein Talent entscheidend, nicht dein Geschlecht, deine Herkunft, Glaubensrichtung, sexuelle Orientierung oder eine eventuelle Behinderung.
-' | ollama run "$LLM_MODEL"
+' "Prepare Job Interview"
 
 # Task: Create Joblistings
-echo 'I have Jobedescription A and Jobdescription B. Please Generate a Jobdescription with the following Key Featurers.
+run_business_task_with_timing 'I have Jobedescription A and Jobdescription B. Please Generate a Jobdescription with the following Key Featurers.
 
       Jobdescription A:
 
@@ -152,23 +154,23 @@ echo 'I have Jobedescription A and Jobdescription B. Please Generate a Jobdescri
             Werde Accsonaut:in
 
             *Für uns ist dein Talent entscheidend, nicht dein Geschlecht, deine Herkunft, Glaubensrichtung, sexuelle Orientierung oder eine eventuelle Behinderung.
-' | ollama run "$LLM_MODEL"
+' "Create Job Listings"
 
 # Task: Update Workerinformation
-echo 'Hier ist eine Projektreferenz sowie der CV eines Mitarbeiters, der an dem Projekt beteiligt war. Bitte erzeuge daraus eine Referenz in der geforderten Formatierung.
-' | ollama run "$LLM_MODEL"
+run_business_task_with_timing 'Hier ist eine Projektreferenz sowie der CV eines Mitarbeiters, der an dem Projekt beteiligt war. Bitte erzeuge daraus eine Referenz in der geforderten Formatierung.
+' "Update Worker Information"
 
 # Task: Konzeption für ein Crowd-Warmup
-echo 'Wir werden eine firmen-interne Konferenz machen mit ca. 250 Teilnehmenden. Ich habe ca. 5 Minuten Zeit, um mit den Teilnehmenden etwas Bewegung am Platz (im Stehen) zu machen. Das nächste Thema wird Südafrika und Software für eine bessere Welt sein. Ich möchte ein kleines (aber nicht albernes) Spiel machen mit allen, z.B. zum Thema Weltreise und Nachhaltigkeit. Was könnte ich machen?' | ollama run "$LLM_MODEL"
+run_business_task_with_timing 'Wir werden eine firmen-interne Konferenz machen mit ca. 250 Teilnehmenden. Ich habe ca. 5 Minuten Zeit, um mit den Teilnehmenden etwas Bewegung am Platz (im Stehen) zu machen. Das nächste Thema wird Südafrika und Software für eine bessere Welt sein. Ich möchte ein kleines (aber nicht albernes) Spiel machen mit allen, z.B. zum Thema Weltreise und Nachhaltigkeit. Was könnte ich machen?' "Conference Warm-up Concept"
 
 # Task: Fragen zu Powerpoint
-echo 'Ich habe bei PowerPoint aus Versehen weggeklickt, dass ich eine Datei wiederherstelle. Komme ich trotzdem noch an die Daten?' | ollama run "$LLM_MODEL"
+run_business_task_with_timing 'Ich habe bei PowerPoint aus Versehen weggeklickt, dass ich eine Datei wiederherstelle. Komme ich trotzdem noch an die Daten?' "PowerPoint Question"
 
 # Task: Fragen zu Obsidian
-echo 'Der Editor obsidian.md kann auf PDFs verlinken und dort auch auf bestimmte Seiten, richtig?' | ollama run "$LLM_MODEL"
+run_business_task_with_timing 'Der Editor obsidian.md kann auf PDFs verlinken und dort auch auf bestimmte Seiten, richtig?' "Obsidian Question"
 
 # Task: Test übersetzen
-echo 'I am writing a blog article for my company. Please help me translate it into english, while keeping the spirit and tone from the original German version.
+run_business_task_with_timing 'I am writing a blog article for my company. Please help me translate it into english, while keeping the spirit and tone from the original German version.
 
       Here is the german version:
 
@@ -183,6 +185,6 @@ echo 'I am writing a blog article for my company. Please help me translate it in
       Vielen Dank, liebe Accsonaut:innen, für das fleißige Abstimmen und ein besonderes Dankeschön an die vielen weiteren und ebenfalls äußerst spannenden Einreichungen. (Hier findest du sie alle: https://accso.atlassian.net/wiki/spaces/ACCSORES/pages/707657729/Accso+AI+Assistance+Challenge+2025).
 
       Ihr wohlverdienter Gewinn (ein Trackpad + ein Gutschein für das im Oktober erscheinenden Lego GameBoy Set) wurde Alina von Cody höchstpersönlich überreicht 🥳
-' | ollama run "$LLM_MODEL"
+' "Translate Blog Article"
 
 sleep 10
