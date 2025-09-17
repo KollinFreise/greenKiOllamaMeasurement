@@ -18,6 +18,7 @@ services:
       - command: chmod +x /var/greenkiollamamesurements/use_cases_non_coding.sh
     "docker-run-args":
       - "--gpus=all"
+      - -v ollama:/root/.ollama
 
 flow:
   - name: Download model
