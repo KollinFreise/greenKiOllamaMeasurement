@@ -3,6 +3,21 @@
 # Usage: ./runtime.sh [llm-model]
 # Beispiel: ./runtime.sh llama3.2:1b
 
+set -e  # Stop on error
+
+echo "=== DEBUG: Script started at $(date) ==="
+echo "DEBUG: Running as user: $(whoami)"
+echo "DEBUG: Current directory: $(pwd)"
+echo "DEBUG: Args: \$1='$1'"
+echo "DEBUG: LLM_MODEL='${1:-llama3.2:1b}'"
+echo "DEBUG: Checking ollama binary location..."
+which ollama || { echo "ERROR: ollama not found in PATH!"; exit 1; }
+echo "DEBUG: ollama version: $(ollama --version 2>&1)"
+echo "DEBUG: Listing /var/greenkiollamamesurements:"
+ls -l /var/greenkiollamamesurements || echo "WARN: Directory missing!"
+echo "DEBUG: Listing /tmp/greenkiollamamesurements:"
+ls -l /tmp/greenkiollamamesurements || echo "WARN: Directory missing!"
+
 LLM_MODEL="${1:-llama3.2:1b}"
 
 echo 'Start real test'
