@@ -17,7 +17,7 @@ services:
       - command: cp /tmp/greenkiollamamesurements/use_cases_non_coding.sh /var/greenkiollamamesurements/use_cases_non_coding.sh
       - command: chmod +x /var/greenkiollamamesurements/use_cases_non_coding.sh
     "docker-run-args":
-      - "-v ollama:/root/.ollama"
+      - "-v ollama-accso:/root/.ollama"
       - "--gpus=all"
 
 flow:
