@@ -1,0 +1,47 @@
+name: Local Measurement of Ollama in Docker
+author: Bennet Wilhelm <bennet.wilhelm@accso.de>, Kollin Freise <kollin.freise@accso.de>
+description: Measuring the energy consumption of Ollama running in Docker
+
+services:
+  ollama-in-docker:
+    image: ollama/ollama:latest
+    "folder-destination": "/tmp/greenkiollamamesurements"
+    environment:
+      - OLLAMA_REQUEST_TIMEOUT=3600s
+    setup-commands:
+      - command: mkdir /var/greenkiollamamesurements
+      - command: cp /tmp/greenkiollamamesurements/warmup.sh /var/greenkiollamamesurements/warmup.sh
+      - command: chmod +x /var/greenkiollamamesurements/warmup.sh
+      - command: cp /tmp/greenkiollamamesurements/use_cases_coding-thinking.sh /var/greenkiollamamesurements/use_cases_coding-thinking.sh
+      - command: chmod +x /var/greenkiollamamesurements/use_cases_coding-thinking.sh
+      - command: cp /tmp/greenkiollamamesurements/use_cases_non_coding-thinking.sh /var/greenkiollamamesurements/use_cases_non_coding-thinking.sh
+      - command: chmod +x /var/greenkiollamamesurements/use_cases_non_coding-thinking.sh
+    "docker-run-args":
+      - "-v ollama-accso:/root/.ollama"
+      - "--gpus=all"
+
+flow:
+  - name: Download model
+    container: ollama-in-docker
+    commands:
+      - type: console
+        command: ollama pull __GMT_VAR_MODEL__
+        note: Downloading model
+  - name: Start Ollama and warm-up models
+    container: ollama-in-docker
+    commands:
+      - type: console
+        command: bash /var/greenkiollamamesurements/warmup.sh __GMT_VAR_MODEL__
+        note: Warming up model
+  - name: Running model with coding tasks
+    container: ollama-in-docker
+    commands:
+      - type: console
+        command: bash /var/greenkiollamamesurements/use_cases_coding-thinking.sh __GMT_VAR_MODEL__
+        note: Testing model with coding tasks
+  - name: Running model with non-coding tasks
+    container: ollama-in-docker
+    commands:
+      - type: console
+        command: bash /var/greenkiollamamesurements/use_cases_non_coding-thinking.sh __GMT_VAR_MODEL__
+        note: Testing model with non-coding tasks
