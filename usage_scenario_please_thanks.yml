@@ -16,6 +16,10 @@ services:
       - command: chmod +x /var/greenkiollamamesurements/use_cases_coding.sh
       - command: cp /tmp/greenkiollamamesurements/use_cases_non_coding.sh /var/greenkiollamamesurements/use_cases_non_coding.sh
       - command: chmod +x /var/greenkiollamamesurements/use_cases_non_coding.sh
+      - command: cp /tmp/greenkiollamamesurements/use_cases_coding-please-and-thanks.sh /var/greenkiollamamesurements/use_cases_coding-please-and-thanks.sh
+      - command: chmod +x /var/greenkiollamamesurements/use_cases_coding-please-and-thanks.sh
+      - command: cp /tmp/greenkiollamamesurements/use_cases_non_coding-please-and-thanks.sh /var/greenkiollamamesurements/use_cases_non_coding-please-and-thanks.sh
+      - command: chmod +x /var/greenkiollamamesurements/use_cases_non_coding-please-and-thanks.sh
     "docker-run-args":
       - "-v ollama-accso:/root/.ollama"
       - "--gpus=all"
@@ -45,3 +49,15 @@ flow:
       - type: console
         command: bash /var/greenkiollamamesurements/use_cases_non_coding.sh __GMT_VAR_MODEL__
         note: Testing model with non-coding tasks
+  - name: Running model with coding tasks (please and thanks)
+    container: ollama-in-docker
+    commands:
+      - type: console
+        command: bash /var/greenkiollamamesurements/use_cases_coding-please-and-thanks.sh __GMT_VAR_MODEL__
+        note: Testing model with coding tasks (please and thanks)
+  - name: Running model with non-coding tasks (please and thanks)
+    container: ollama-in-docker
+    commands:
+      - type: console
+        command: bash /var/greenkiollamamesurements/use_cases_non_coding-please-and-thanks.sh __GMT_VAR_MODEL__
+        note: Testing model with non-coding tasks (please and thanks)
