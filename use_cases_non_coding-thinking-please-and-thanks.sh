@@ -25,7 +25,7 @@ function run_business_task_with_timing() {
 }
 
 # Task: Prepare job interview (generate questions)
-run_business_task_with_timing 'I would like to generate some questions for a Job Interview. The jobdescription is following: Please generate some example Questions and important skills I have to ask the applicants. Here the jobdescription:
+run_business_task_with_timing 'Please help me out! I would like to generate some questions for a Job Interview. The jobdescription is following: Please generate some example Questions and important skills I have to ask the applicants. Here the jobdescription:
 
       Senior Fullstack Entwickler - Java, Spring, Angular*
 
@@ -89,9 +89,10 @@ run_business_task_with_timing 'I would like to generate some questions for a Job
 
       *Für uns ist dein Talent entscheidend, nicht dein Geschlecht, deine Herkunft, Glaubensrichtung, sexuelle Orientierung oder eine eventuelle Behinderung.
 ' "Prepare Job Interview"
+run_business_task_with_timing 'Top, damit kann ich gut arbeiten!' "Dankeschön für Prepare Job Interview."
 
 # Task: Create Joblistings
-run_business_task_with_timing 'I have Jobedescription A and Jobdescription B. Please Generate a Jobdescription with the following Key Featurers.
+run_business_task_with_timing 'I require your assistance. I have Jobedescription A and Jobdescription B. Please Generate a Jobdescription with the following Key Featurers.
 
       Jobdescription A:
 
@@ -155,22 +156,27 @@ run_business_task_with_timing 'I have Jobedescription A and Jobdescription B. Pl
 
             *Für uns ist dein Talent entscheidend, nicht dein Geschlecht, deine Herkunft, Glaubensrichtung, sexuelle Orientierung oder eine eventuelle Behinderung.
 ' "Create Job Listings"
+run_business_task_with_timing 'Ein Traum!' "Dankeschön für Create Job Listings"
 
 # Task: Update Workerinformation
-run_business_task_with_timing 'Hier ist eine Projektreferenz sowie der CV eines Mitarbeiters, der an dem Projekt beteiligt war. Bitte erzeuge daraus eine Referenz in der geforderten Formatierung.
+run_business_task_with_timing 'Greif mir mal unter die Arme. Hier ist eine Projektreferenz sowie der CV eines Mitarbeiters, der an dem Projekt beteiligt war. Bitte erzeuge daraus eine Referenz in der geforderten Formatierung.
 ' "Update Worker Information"
+run_business_task_with_timing 'Super, danke!' "Dankeschön für Update Worker Information"
 
 # Task: Konzeption für ein Crowd-Warmup
-run_business_task_with_timing 'Wir werden eine firmen-interne Konferenz machen mit ca. 250 Teilnehmenden. Ich habe ca. 5 Minuten Zeit, um mit den Teilnehmenden etwas Bewegung am Platz (im Stehen) zu machen. Das nächste Thema wird Südafrika und Software für eine bessere Welt sein. Ich möchte ein kleines (aber nicht albernes) Spiel machen mit allen, z.B. zum Thema Weltreise und Nachhaltigkeit. Was könnte ich machen?' "Conference Warm-up Concept"
+run_business_task_with_timing 'Wir werden eine firmen-interne Konferenz machen mit ca. 250 Teilnehmenden. Ich habe ca. 5 Minuten Zeit, um mit den Teilnehmenden etwas Bewegung am Platz (im Stehen) zu machen. Das nächste Thema wird Südafrika und Software für eine bessere Welt sein. Ich möchte ein kleines (aber nicht albernes) Spiel machen mit allen, z.B. zum Thema Weltreise und Nachhaltigkeit. Du bist doch gut mit sowas. Was könnte ich machen?' "Conference Warm-up Concept"
+run_business_task_with_timing 'Genial, genau so was habe ich gesucht!' "Dankeschön für Conference Warm-up Concept"
 
 # Task: Fragen zu Powerpoint
-run_business_task_with_timing 'Ich habe bei PowerPoint aus Versehen weggeklickt, dass ich eine Datei wiederherstelle. Komme ich trotzdem noch an die Daten?' "PowerPoint Question"
+run_business_task_with_timing 'Bitte hilf mir mal. Ich habe bei PowerPoint aus Versehen weggeklickt, dass ich eine Datei wiederherstelle. Komme ich trotzdem noch an die Daten?' "PowerPoint Question"
+run_business_task_with_timing 'Wunderbar, du bist echt hilfreich!' "Dankeschön für PowerPoint Question"
 
 # Task: Fragen zu Obsidian
 run_business_task_with_timing 'Der Editor obsidian.md kann auf PDFs verlinken und dort auch auf bestimmte Seiten, richtig?' "Obsidian Question"
+run_business_task_with_timing 'THAT IS HOW ITS DONE!! Perfekt, danke!' "Dankeschön für Obsidian Question"
 
 # Task: Test übersetzen
-run_business_task_with_timing 'I am writing a blog article for my company. Please help me translate it into english, while keeping the spirit and tone from the original German version.
+run_business_task_with_timing 'Please help me with this. I am writing a blog article for my company. Please help me translate it into english, while keeping the spirit and tone from the original German version.
 
       Here is the german version:
 
@@ -186,5 +192,6 @@ run_business_task_with_timing 'I am writing a blog article for my company. Pleas
 
       Ihr wohlverdienter Gewinn (ein Trackpad + ein Gutschein für das im Oktober erscheinenden Lego GameBoy Set) wurde Alina von Cody höchstpersönlich überreicht 🥳
 ' "Translate Blog Article"
+run_business_task_with_timing 'Fantastisch, genau was ich gesucht habe!' "Dankeschön für Translate Blog Article"
 
 sleep 10
